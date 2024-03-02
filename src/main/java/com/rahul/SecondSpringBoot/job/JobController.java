@@ -9,19 +9,23 @@ import java.util.stream.Collectors;
 @RestController
 public class JobController {
 
-    private List<Job> jobs = new ArrayList<>();
+    private JobService jobService;
+
+    public JobController(JobService jobService) {
+        this.jobService = jobService;
+    }
 
     @PostMapping("/jobs")
     public String createJob(@RequestBody Job job){
 
-        jobs.add(job);
+        jobService.createdJob(job);
         return "Job Added Successfully";
     }
 
     @GetMapping("/jobs")
     public List<Job> findAll(){
 
-        return  jobs;
+        return  jobService.findAll();
 
     }
 
