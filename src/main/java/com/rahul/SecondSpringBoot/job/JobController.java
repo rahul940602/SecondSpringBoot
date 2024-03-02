@@ -1,5 +1,7 @@
 package com.rahul.SecondSpringBoot.job;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,24 +18,28 @@ public class JobController {
     }
 
     @PostMapping("/jobs")
-    public String createJob(@RequestBody Job job){
+    public ResponseEntity<String> createJob(@RequestBody Job job){
 
         jobService.createdJob(job);
-        return "Job Added Successfully";
+        return new ResponseEntity<>( "Job Added Successfully",HttpStatus.CREATED);
     }
 
     @GetMapping("/jobs")
-    public List<Job> findAll(){
+    public ResponseEntity<List<Job>> findAll(){
 
-        return  jobService.findAll();
+        return new ResponseEntity<>(jobService.findAll(),HttpStatus.OK) ;
     }
 
     @GetMapping("/jobs/{id}")
-    public  Job getJobsById(@PathVariable Long id){
+    public ResponseEntity<Job> getJobsById(@PathVariable Long id){
 
         Job job = jobService.getJobById(id);
 
-        return job;
+        if(job != null)
+         return new ResponseEntity<>(job, HttpStatus.OK);
+
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
