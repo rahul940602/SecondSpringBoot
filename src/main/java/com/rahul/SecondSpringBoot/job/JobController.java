@@ -26,7 +26,14 @@ public class JobController {
     public List<Job> findAll(){
 
         return  jobService.findAll();
+    }
 
+    @GetMapping("/jobs/{id}")
+    public  Job getJobsById(@PathVariable Long id){
+
+        Job job = jobService.getJobById(id);
+
+        return job;
     }
 
 
