@@ -1,7 +1,13 @@
 package com.rahul.SecondSpringBoot.job;
 
+import jakarta.persistence.*;
+
+@Entity
+//@Table(name="job_table")
 public class Job {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
 
@@ -11,6 +17,11 @@ public class Job {
 
     private String maxSalary;
     private String location;
+
+    //NoArgConstructor -> jpa needs to create instances of entity class during the retieval of data
+   //  from database jpa uses reflections to create instances of entity.
+    public Job() {
+    }
 
     public Job(Long id, String title, String description, String minSalary, String maxSalary, String location) {
         this.id = id;

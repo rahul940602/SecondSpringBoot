@@ -12,7 +12,7 @@ import java.util.List;
 public class JobServiceImpl implements JobService {
 
     private List<Job> jobs = new ArrayList<>();
-    private Long nextId = 1L;
+//    private Long nextId = 1L;
     @Override
     public List<Job> findAll() {
         return jobs;
@@ -20,7 +20,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public void createdJob(Job job) {
-       job.setId(nextId++);
+//       job.setId(nextId++);
        jobs.add(job);
 
     }
