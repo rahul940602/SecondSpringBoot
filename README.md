@@ -1,5 +1,7 @@
 # SecondSpringBoot
 
-@RestController 
-1)post Request
-2)GetAll Request
+Single MonoLathic Practice
+
+1)Job
+2)
+3)
