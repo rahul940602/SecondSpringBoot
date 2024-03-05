@@ -1,74 +1,77 @@
 package com.rahul.SecondSpringBoot.job.impl;
 
-import com.rahul.SecondSpringBoot.job.Job;
-import com.rahul.SecondSpringBoot.job.JobRepository;
-import com.rahul.SecondSpringBoot.job.JobService;
+import com.rahul.SecondSpringBoot.job.*;
 import org.aspectj.apache.bcel.classfile.Module;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JobServiceImpl implements JobService {
 
     private JobRepository jobRepository;
+    private ModelMapper model;
 //    private List<Job> jobs = new ArrayList<>();
 //    private Long nextId = 1L;
 
 
-    public JobServiceImpl(JobRepository jobRepository) {
+    public JobServiceImpl(JobRepository jobRepository,ModelMapper model) {
         this.jobRepository = jobRepository;
+        this.model =model;
     }
 
     @Override
-    public List<Job> findAll() {
-        return jobRepository.findAll();
+    public List<JobDto> findAll() {
+
+        List<Job> jobs = jobRepository.findAll();
+        return jobs.stream().map((job) -> model.map(job,JobDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    public void createdJob(Job job) {
-//       job.setId(nextId++);
-        jobRepository.save(job);
+    public JobDto createdJob(JobDto jobDto) {
+        Job job =model.map(jobDto,Job.class);
+        Job savedJob = jobRepository.save(job);
+        return model.map(savedJob, JobDto.class);
+    }
+
+    @Override
+    public JobDto getJobById(Long id) {
+
+        Job job = jobRepository.findById(id).orElseThrow(()-> new ResourceNotFound("job", "id", id));
+
+        return model.map(job,JobDto.class);
+    }
+    @Override
+    public JobDto updateJob(JobDto jobDto,Long id) {
+
+             Job job = jobRepository.findById(id).orElseThrow(()-> new ResourceNotFound("job", "id", id));
+
+          job.setTitle(jobDto.getTitle());
+          job.setDescription(jobDto.getDescription());
+          job.setMinSalary(jobDto.getMinSalary());
+          job.setMaxSalary(jobDto.getMaxSalary());
+          job.setLocation(job.getLocation());
+          job.setId(id);
+
+          Job updatedJob = jobRepository.save(job);
+
+          return model.map(updatedJob,JobDto.class);
+
 
     }
 
     @Override
-    public Job getJobById(Long id) {
+    public void deleteJob(Long id) {
 
-        return jobRepository.findById(id).orElse(null);
-    }
+        Job job = jobRepository.findById(id).orElseThrow(()-> new ResourceNotFound("job", "id", id));
 
-    @Override
-    public boolean deleteJobById(Long id) {
-  try {
-      jobRepository.deleteById(id);
-      return true;
-  }catch (Exception ex){
-      return false;
-  }
+        jobRepository.delete(job);
 
     }
 
-    @Override
-    public boolean updateJob(Long id, Job updateJob) {
-
-        Optional<Job> jobOptional = jobRepository.findById(id);
-
-
-            if(jobOptional.isPresent()){
-                Job job = jobOptional.get();
-                job.setTitle(updateJob.getTitle());
-                job.setDescription(updateJob.getDescription());
-                job.setMinSalary(updateJob.getMinSalary());
-                job.setMaxSalary(updateJob.getMaxSalary());
-                job.setLocation(updateJob.getLocation());
-                 jobRepository.save(job);
-                return true;
-            }
-
-        return false;
-    }
 }
