@@ -1,8 +1,8 @@
 # SecondSpringBoot
 
-MonoLathic Practice  Job Portal in BackEnd
+Monolathic Practice  Job Portal in BackEnd
 
-1)Job Modue
+1)Job Module
     @PostRequest   :- localhost:8080/jobs
     @GetRequest    :- localhost:8080/jobs,
                       localhost:8080/jobs/{id}
