@@ -59,9 +59,12 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void deleteCompany(Long id) {
 
+
+
         Company company = companyRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("company","id", id));
+                        .orElseThrow(()->new ResourceNotFound("company","id",id));
 
         companyRepository.delete(company);
+
     }
 }

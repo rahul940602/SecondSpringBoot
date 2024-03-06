@@ -40,7 +40,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/company/{id}")
-    public ResponseEntity<String> deleteCompany(Long id){
+    public ResponseEntity<String> deleteCompany(@PathVariable  Long id){
 
         companyService.deleteCompany(id);
         return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
