@@ -4,8 +4,12 @@ import com.rahul.SecondSpringBoot.company.Company;
 import com.rahul.SecondSpringBoot.company.CompanyDto;
 import com.rahul.SecondSpringBoot.company.CompanyRepository;
 import com.rahul.SecondSpringBoot.company.CompanyService;
+import com.rahul.SecondSpringBoot.job.ResourceNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -25,5 +29,12 @@ public class CompanyServiceImpl implements CompanyService {
         Company savedCompany = companyRepository.save(company);
         return model.map(savedCompany, CompanyDto.class);
 
+    }
+
+    @Override
+    public List<CompanyDto> findAll() {
+
+        List<Company> companyies = companyRepository.findAll();
+        return companyies.stream().map((company)->model.map(company,CompanyDto.class)).collect(Collectors.toList());
     }
 }

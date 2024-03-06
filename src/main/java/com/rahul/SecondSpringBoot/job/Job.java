@@ -1,6 +1,9 @@
 package com.rahul.SecondSpringBoot.job;
 
+import com.rahul.SecondSpringBoot.company.Company;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 //@Table(name="job_table")
@@ -18,6 +21,10 @@ public class Job {
     private String maxSalary;
     private String location;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     //NoArgConstructor -> jpa needs to create instances of entity class during the retieval of data
    //  from database jpa uses reflections to create instances of entity.
     public Job() {
@@ -30,6 +37,14 @@ public class Job {
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
         this.location = location;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Long getId() {

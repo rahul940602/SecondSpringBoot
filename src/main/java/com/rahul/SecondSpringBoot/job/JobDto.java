@@ -1,5 +1,7 @@
 package com.rahul.SecondSpringBoot.job;
 
+import com.rahul.SecondSpringBoot.company.Company;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -14,6 +16,7 @@ public class JobDto {
 
     private String maxSalary;
     private String location;
-
+    @ManyToOne
+    private Company company;
 
 }
