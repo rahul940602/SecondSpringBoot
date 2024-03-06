@@ -1,10 +1,7 @@
 package com.rahul.SecondSpringBoot.company.impl;
 
-import com.rahul.SecondSpringBoot.company.Company;
-import com.rahul.SecondSpringBoot.company.CompanyDto;
-import com.rahul.SecondSpringBoot.company.CompanyRepository;
-import com.rahul.SecondSpringBoot.company.CompanyService;
-import com.rahul.SecondSpringBoot.job.ResourceNotFound;
+import com.rahul.SecondSpringBoot.company.*;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +33,35 @@ public class CompanyServiceImpl implements CompanyService {
 
         List<Company> companyies = companyRepository.findAll();
         return companyies.stream().map((company)->model.map(company,CompanyDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public CompanyDto getCompanyById(Long id) {
+
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("company","id", id) );
+        return model.map(company,CompanyDto.class);
+    }
+
+    @Override
+    public CompanyDto updateCompany(CompanyDto companyDto, Long id) {
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("company","id", id));
+
+        company.setName(companyDto.getName());
+        company.setDescription(companyDto.getDescription());
+        company.setId(id);
+
+        Company updatedCompany = companyRepository.save(company);
+        return model.map(updatedCompany, CompanyDto.class);
+    }
+
+    @Override
+    public void deleteCompany(Long id) {
+
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("company","id", id));
+
+        companyRepository.delete(company);
     }
 }

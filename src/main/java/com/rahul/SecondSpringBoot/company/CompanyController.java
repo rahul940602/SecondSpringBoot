@@ -2,10 +2,7 @@ package com.rahul.SecondSpringBoot.company;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,27 @@ public class CompanyController {
     @GetMapping("/company")
     public ResponseEntity<List<CompanyDto>> findAll(){
         return new ResponseEntity<>(companyService.findAll(),HttpStatus.OK);
+    }
+
+    @GetMapping("/company/{id}")
+    public ResponseEntity<CompanyDto> getCompanyById(@PathVariable Long id){
+
+        return new ResponseEntity<>(companyService.getCompanyById(id),HttpStatus.OK);
+    }
+
+    @PutMapping("/company/{id}")
+    public ResponseEntity<CompanyDto> updatedCompany( @RequestBody CompanyDto companyDto,
+                                                      @PathVariable (value = "id") Long id
+                                                      )
+    {
+        return new ResponseEntity<>(companyService.updateCompany(companyDto,id),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/company/{id}")
+    public ResponseEntity<String> deleteCompany(Long id){
+
+        companyService.deleteCompany(id);
+        return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
     }
 
 }
