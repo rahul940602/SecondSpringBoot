@@ -32,17 +32,17 @@ public class JobController {
     @GetMapping("/jobs/{id}")
     public ResponseEntity<JobDto> getJobsById(@PathVariable Long id){
 
-        JobDto jobDto = jobService.getJobById(id);
 
-        return new ResponseEntity<>(jobDto,HttpStatus.OK);
+
+        return new ResponseEntity<>(jobService.getJobById(id),HttpStatus.OK);
     }
 
     @PutMapping("/jobs/{id}")
     public ResponseEntity<JobDto> updateJob(@PathVariable (value = "id") Long id,
                                             @RequestBody JobDto jobDto){
-        JobDto upJobDto = jobService.updateJob(jobDto,id);
 
-        return new ResponseEntity<>(jobDto,HttpStatus.OK);
+
+        return new ResponseEntity<>(jobService.updateJob(jobDto,id),HttpStatus.OK);
 
     }
 
