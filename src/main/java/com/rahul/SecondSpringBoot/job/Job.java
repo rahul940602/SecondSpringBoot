@@ -1,5 +1,6 @@
 package com.rahul.SecondSpringBoot.job;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rahul.SecondSpringBoot.company.Company;
 import jakarta.persistence.*;
 
@@ -22,7 +23,8 @@ public class Job {
     private String location;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
+    @JsonIgnore
+    @JoinColumn(name = "comapany_id")
     private Company company;
 
     //NoArgConstructor -> jpa needs to create instances of entity class during the retieval of data

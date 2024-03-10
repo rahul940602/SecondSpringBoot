@@ -1,6 +1,7 @@
 package com.rahul.SecondSpringBoot.company;
 
 import com.rahul.SecondSpringBoot.job.Job;
+import com.rahul.SecondSpringBoot.review.Review;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -15,5 +16,8 @@ public class CompanyDto {
 
     @OneToMany
     private List<Job> jobs;
+
+    @OneToMany
+    private List<Review> review;
 
 }

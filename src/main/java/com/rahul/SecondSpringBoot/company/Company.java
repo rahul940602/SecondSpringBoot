@@ -2,6 +2,7 @@ package com.rahul.SecondSpringBoot.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rahul.SecondSpringBoot.job.Job;
+import com.rahul.SecondSpringBoot.review.Review;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,9 +21,20 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<Job> jobs;
 
+    @OneToMany(mappedBy = "company")
+    private List<Review> review;
+
     // private List<Review> reviews;
 
     public Company() {
+    }
+
+    public List<Review> getReview() {
+        return review;
+    }
+
+    public void setReview(List<Review> review) {
+        this.review = review;
     }
 
     public Long getId() {
@@ -30,7 +42,7 @@ public class Company {
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id= id;
     }
 
     public String getName() {

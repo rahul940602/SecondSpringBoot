@@ -1,18 +1,34 @@
 package com.rahul.SecondSpringBoot.review;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rahul.SecondSpringBoot.company.Company;
+import io.micrometer.observation.ObservationFilter;
+import jakarta.persistence.*;
 
 @Entity
 @Table
 public class Review {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
     private double rating;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     public Review() {
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Long getId() {
@@ -46,4 +62,7 @@ public class Review {
     public void setRating(double rating) {
         this.rating = rating;
     }
+
+
+
 }
