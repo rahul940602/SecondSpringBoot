@@ -17,5 +17,10 @@ Monolathic Practice  Job Portal in BackEnd
     @PutRequest    :- localhost:8080/company/{id}
     @DeleteRequest :- localhost:8080/company/{id}
    Note :- If you delete company {id} delete all the job on {id}
-4) 
-5)
+4) Review
+       @PostRequest   :- localhost:8080/company/{companyId}/review
+    @GetRequest    :- localhost:8080/company/{companyId}/review,
+                      localhost:8080/company/{id}/review/{id}
+    @PutRequest    :- localhost:8080/company/{id}/review/{id}
+    @DeleteRequest :- localhost:8080/company/{id}/review/{id}
+
