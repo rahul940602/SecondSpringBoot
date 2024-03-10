@@ -12,4 +12,6 @@ ReviewDto addReview(Long companyId, ReviewDto reviewDto);
 ReviewDto getReviewById(Long companyId, Long reviewId);
 
 ReviewDto updateReview(Long companyId, Long reviewId, ReviewDto reviewDto);
+
+void deleteReview(Long companyId, Long ReviewId);
 }

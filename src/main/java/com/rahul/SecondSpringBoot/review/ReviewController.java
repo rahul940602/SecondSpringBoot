@@ -40,4 +40,10 @@ public class ReviewController {
                                                   @RequestBody ReviewDto reviewDto){
         return new ResponseEntity<>(reviewService.updateReview(companyId,reviewId,reviewDto),HttpStatus.OK);
     }
+    @DeleteMapping("review/{reviewId}")
+    public ResponseEntity<String> deleteReview(@PathVariable Long companyId,
+                                                  @PathVariable Long reviewId){
+           reviewService.deleteReview(companyId,reviewId);
+        return new ResponseEntity<>("DeletedSuccessfully",HttpStatus.OK);
+    }
 }

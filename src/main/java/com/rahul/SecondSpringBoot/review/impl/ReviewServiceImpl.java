@@ -73,9 +73,41 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto updateReview(Long companyId, Long reviewId, ReviewDto reviewDto) {
-        // Find reviews by companyId
 
-        return null;
+
+        List<Review> reviews = reviewRepository.findByCompanyId(companyId);
+
+        Review getReview =reviews.stream()
+                .filter((review) -> review.getId().equals(reviewId))
+                .findFirst()
+                .orElseThrow(()-> new ResourceNotFound("review","id",reviewId));
+
+
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(()->new ResourceNotFound("company","id",companyId));
+
+        reviewDto.setCompany(company);
+        getReview.setTitle(reviewDto.getTitle());
+        getReview.setDescription(reviewDto.getDescription());
+        getReview.setRating(reviewDto.getRating());
+
+        Review updateReview = reviewRepository.save(getReview);
+
+        return model.map(updateReview, ReviewDto.class);
+    }
+
+    @Override
+    public void deleteReview(Long companyId, Long reviewId) {
+        List<Review> reviews = reviewRepository.findByCompanyId(companyId);
+
+        Review getReview =reviews.stream()
+                .filter((review) -> review.getId().equals(reviewId))
+                .findFirst()
+                .orElseThrow(()-> new ResourceNotFound("review","id",reviewId));
+
+
+             reviewRepository.delete(getReview);
+
     }
 
 
